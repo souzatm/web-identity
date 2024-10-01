@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using WebIdentity.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebIdentity.Controllers
 {
@@ -84,6 +82,13 @@ namespace WebIdentity.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [Route("/Account/AccessDenied")]
+        public ActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
