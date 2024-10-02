@@ -22,7 +22,7 @@ namespace WebIdentity.Controllers
             return View(await _context.Alunos.ToListAsync());
         }
 
-        [Authorize(Roles = "User, Admin, gerente")]
+        [Authorize(Policy = "RequireUserAdminGerenteRole")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,7 +40,7 @@ namespace WebIdentity.Controllers
             return View(aluno);
         }
 
-        [Authorize(Roles = "User, Admin, Gerente")]
+        [Authorize(Policy = "RequireUserAdminGerenteRole")]
         public IActionResult Create()
         {
             return View();
