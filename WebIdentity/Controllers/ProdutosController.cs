@@ -24,7 +24,7 @@ namespace WebIdentity.Controllers
                 : Problem("Entity set 'AppDbContext.Produtos' é null.");
         }
 
-        [Authorize(Policy = "IsFuncionarioClaimAccess")]
+        [Authorize(Policy = "TempoCadastroMinimo")]
         public async Task<IActionResult> Details(int? id)
         {
             if(id == null || _context.Produtos == null)
@@ -42,7 +42,7 @@ namespace WebIdentity.Controllers
             return View(produto);   
         }
 
-        [Authorize(Policy = "IsFuncionarioClaimAccess")]
+        [Authorize(Policy = "TempoCadastroMinimo")]
         public IActionResult Create()
         {
             return View();

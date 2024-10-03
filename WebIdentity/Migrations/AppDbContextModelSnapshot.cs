@@ -247,7 +247,7 @@ namespace WebIdentity.Migrations
 
                     b.HasKey("AlunoId");
 
-                    b.ToTable("Alunos");
+                    b.ToTable("Alunos", (string)null);
 
                     b.HasData(
                         new
@@ -278,7 +278,7 @@ namespace WebIdentity.Migrations
 
                     b.HasKey("ProdutoId");
 
-                    b.ToTable("Produtos");
+                    b.ToTable("Produtos", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

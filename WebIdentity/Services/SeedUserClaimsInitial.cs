@@ -18,7 +18,7 @@ namespace WebIdentity.Services
             try
             {
                 //Criar usuário 1
-                IdentityUser user1 = await _userManager.FindByEmailAsync("admin@localhost");
+                IdentityUser user1 = await _userManager.FindByEmailAsync("gerente@localhost");
                 if (user1 is not null)
                 {
                     var claimList = (await _userManager
@@ -29,14 +29,7 @@ namespace WebIdentity.Services
                     {
                         var claimResult1 = await _userManager
                             .AddClaimAsync(user1,
-                            new Claim("CadastradoEm", "10/02/2024"));
-                    }
-
-                    if (!claimList.Contains("IsAdmin"))
-                    {
-                        var claimResult2 = await _userManager
-                            .AddClaimAsync(user1,
-                            new Claim("IsAdmin", "true"));
+                            new Claim("CadastradoEm", "10/02/2023"));
                     }
                 }
 
@@ -47,18 +40,26 @@ namespace WebIdentity.Services
                         .GetClaimsAsync(user2))
                         .Select(p => p.Type);
 
-                    if (!claimList.Contains("IsAdmin"))
+                    if (!claimList.Contains("CadastradoEm"))
                     {
                         var claimResult1 = await _userManager
                             .AddClaimAsync(user2,
-                            new Claim("IsAdmin", "false"));
+                            new Claim("CadastradoEm", "10/02/2023"));
                     }
+                }
 
-                    if (!claimList.Contains("IsFuncionario"))
+                IdentityUser user3 = await _userManager.FindByEmailAsync("thiago@localhost");
+                if (user3 is not null)
+                {
+                    var claimList = (await _userManager
+                        .GetClaimsAsync(user3))
+                        .Select(p => p.Type);
+
+                    if (!claimList.Contains("CadastradoEm"))
                     {
-                        var claimResult2 = await _userManager
-                            .AddClaimAsync(user2,
-                            new Claim("IsFuncionario", "true"));
+                        var claimResult1 = await _userManager
+                            .AddClaimAsync(user3,
+                            new Claim("CadastradoEm", "10/02/2023"));
                     }
                 }
             }

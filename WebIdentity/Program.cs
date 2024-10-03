@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebIdentity.Data;
+using WebIdentity.Policies;
 using WebIdentity.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +33,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("RequireUserAdminGerenteRole", 
+    options.AddPolicy("RequireUserAdminGerenteRole",
         policy => policy.RequireRole("User", "Admin", "Gerente"));
 });
 
@@ -45,9 +47,15 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy("IsFuncionarioClaimAccess",
         policy => policy.RequireClaim("IsFuncionario", "true"));
+
+    options.AddPolicy("TempoCadastroMinimo",
+        policy =>
+        {
+            policy.Requirements.Add(new TempoCadastroRequirement(1));
+        });
 });
 
-
+builder.Services.AddScoped<IAuthorizationHandler, TempoCadastroHandler>();
 builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
 builder.Services.AddScoped<ISeedUserClaimsInitial, SeedUserClaimsInitial>();
 
